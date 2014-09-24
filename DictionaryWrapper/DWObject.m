@@ -70,6 +70,10 @@
     return self->_object;
 }
 
+- (id)objectForKeyedSubscript:(id)key {
+    return self->_object[key];
+}
+
 - (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector {
     static NSMethodSignature *getterSignature = nil;
 
@@ -138,6 +142,14 @@
     } else {
         [super forwardInvocation:anInvocation];
     }
+}
+
+- (id)objectForKeyedSubscript:(id)key {
+    id object = [super objectForKeyedSubscript:key];
+    if (object == [NSNull null]) {
+        object = nil;
+    }
+    return object;
 }
 
 @end

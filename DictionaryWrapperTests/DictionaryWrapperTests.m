@@ -126,6 +126,19 @@ void test(id self) {
     XCTAssertEqualObjects(wrapped._object[@"value"], @"my value");
 }
 
+- (void)testKeyedSubscript {
+    id dataObject = @{@"id": @1, @"value": @"my value", @"null": [NSNull null]};
+    DWObject *wrapped = [DWObject :dataObject];
+    XCTAssertNotNil(wrapped[@"id"]);
+    XCTAssertEqual(wrapped[@"id"], wrapped._object[@"id"]);
+    XCTAssertEqual(wrapped[@"null"], [NSNull null]);
+
+    wrapped = [DWNotNullObject :dataObject];
+    XCTAssertNotNil(wrapped[@"id"]);
+    XCTAssertEqual(wrapped[@"id"], wrapped._object[@"id"]);
+    XCTAssertEqual(wrapped[@"null"], (id)nil);
+}
+
 //- (void)testPerformanceExample {
 //    // This is an example of a performance test case.
 //    [self measureBlock:^{

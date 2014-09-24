@@ -25,6 +25,11 @@
 @property(readonly) NSDictionary *_dictionary;
 
 /*!
+ *  @brief Keyed subscript interface to access _object.
+ */
+- (id)objectForKeyedSubscript:(id)key;
+
+/*!
  *  @brief Returns an initialized DWObject object containing given data object.
  *  @param object An object which satisfies keyed subscript interface.
  *  @throw NSInvalidArgumentException
