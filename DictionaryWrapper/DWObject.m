@@ -9,6 +9,29 @@
 #import "DWObject.h"
 #import <objc/runtime.h>
 
+
+id DWGeneralCacheToKey(id self, id<NSCopying> cacheKey, DWCacheMapper operator) {
+    id obj = objc_getAssociatedObject(self, (__bridge void *)cacheKey);
+    if (obj == nil) {
+        obj = operator(self);
+        objc_setAssociatedObject(self, (__bridge void *)cacheKey, obj, OBJC_ASSOCIATION_RETAIN);
+    }
+    return obj;
+}
+
+id DWPropertyCacheToKey(DWObject *self, id<NSCopying> key, id<NSCopying> cacheKey, DWCacheMapper operator) {
+    return DWGeneralCacheToKey(self, cacheKey, ^id (DWObject *self) {
+        id raw = self[key];
+        return operator(raw);
+    });
+}
+
+id DWPropertyCache(DWObject *self, id<NSCopying> key, DWCacheMapper operator) {
+    return DWPropertyCacheToKey(self, key, key, operator);
+}
+
+
+
 @implementation DWObject
 
 @synthesize _object=_object;

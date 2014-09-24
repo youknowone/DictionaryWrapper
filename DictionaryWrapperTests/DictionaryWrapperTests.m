@@ -26,6 +26,8 @@
 @property(readonly) NSNumber *number;
 @property(readonly) NSNull *null;
 
+@property(readonly) id custom;
+
 @end
 
 //! Body
@@ -36,6 +38,12 @@
  *  you need @dynamic to prevent auto-synthesizing
  */
 @dynamic type, value, number, null;
+
+- (id)custom {
+    return DWPropertyCache(self, @"number", ^id(NSNumber *raw) {
+        return @(raw.integerValue + 1);
+    });
+}
 
 @end
 
@@ -82,6 +90,7 @@ void test(id self) {
     XCTAssertEqualObjects(testObject.type, @"test", @"`type` property is connected to the field in JSON data");
     XCTAssertEqualObjects(testObject.value, @"wrapped value", @"`value` property is also connected");
     XCTAssertEqualObjects(testObject.number, @(42), @"`number` is type of NSNumber");
+    XCTAssertEqualObjects(testObject.custom, @(43), @"`number` is type of NSNumber");
     XCTAssertEqualObjects(testObject.null, [NSNull null], @"null is type of NSNull");
 
     DWSafeTest *safeObject = [DWSafeTest :dataObject]; // almost same

@@ -104,3 +104,9 @@
 @interface DWNotNullObject: DWObject
 
 @end
+
+typedef id (^DWCacheMapper)(id raw);
+
+FOUNDATION_EXTERN id DWGeneralCacheToKey(id self, id<NSCopying> cacheKey, DWCacheMapper operator); // self
+FOUNDATION_EXTERN id DWPropertyCacheToKey(DWObject *self, id<NSCopying> key, id<NSCopying> cacheKey, DWCacheMapper operator);
+FOUNDATION_EXTERN id DWPropertyCache(DWObject *self, id<NSCopying> key, DWCacheMapper operator);
