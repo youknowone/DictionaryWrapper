@@ -5,7 +5,7 @@ It is especially useful for JSON handling.
 
 NOTE: This toolkit is working with subclassing. Read docs below first.
 
-Cocoapods available.
+CocoaPods available.
 
 # How to
 
